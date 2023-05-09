@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Expense tracker</title>
+    <link rel="stylesheet" href="reset.css">
+    <link rel="stylesheet" href="index.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div class="expense">
+        <h1>Учет расходов</h1>
+        <div class="expense-wrapper">
+            <div class="expense_left">
+                <input
+                    id="js-input-expense"
+                    class="expense__input"
+                    type="number">
+                <p class="expense__total">Всего:<span id="js-total-expense" class="expense__total_value">0</span></p>
+            </div>
+            <div class="expense_right">
+                <button
+                    id="js-button-expense"
+                    class="expense__btn">
+                    Добавить
+                </button>
+                <div class="expense__history">
+                    <h2>Итого:</h2>
+                    <div id="js-history-expense"
+                        class="expense__history_value">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="expense__info_wrapper">
+            <div class="expense__info">
+                <p class="expense__info_limit"></p>
+                <!-- <p class="expense__info_total">Всего:<span id="js-total-expense"></span></p> -->
+                <p class="expense__info_status"></p>
+            </div>
+        </div>
+    </div>
+
+    <script src="index.js"></script>
+</body>
+
+</html>
