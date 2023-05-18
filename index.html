@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Expense tracker</title>
+    <title>Expenses tracker</title>
     <link rel="stylesheet" href="reset.css">
     <link rel="stylesheet" href="index.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
@@ -17,8 +17,8 @@
         <div class="expensesInput">
             <div class="moneyInput rub">
                 <input
-                    class="moneyInput__input"
-                    id="expenseInput" 
+                    id="expenseInput"
+                    class="moneyInput__input" 
                     type="number"
                     min="1"
                 >    
@@ -40,6 +40,11 @@
             <div class="stats__limit">
                 <span class="label">Лимит:</span>
                 <span id="limitValue" class="rub">10000</span>
+                <img
+                    id="changeLimitBtn"
+                    class="stats__changeLimitBtn" 
+                    src="change_limit.png" 
+                    alt="иконка смены лимита">
             </div>
             <div class="stats__total">
                 <span class="label">Всего:</span>
@@ -53,10 +58,10 @@
 
         <div class="history">
             <div class="history__title label">История</div>
-            <ol class="history__list" id="historyList"></ol>
+            <ol id="historyList" class="history__list"></ol>
         </div>
 
-        <button class="clearButton" id="clearButton">Сбросить расходы</button>
+        <button id="clearButton" class="clearButton">Сбросить расходы</button>
     </div>
 
     <script src="index.js"></script>

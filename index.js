@@ -1,6 +1,9 @@
 // Объявление переменных - Строковых констант
 const STATUS_IN_LIMIT = 'всё хорошо';
 const STATUS_OUT_OF_LIMIT = 'всё плохо';
+const CHENGE_NEW_LIMIT_TEXT = 'Новый лимит';
+const STORAGE_LABLE_LIMIT = 'limit';
+const STORAGE_LABLE_EXPENSES = 'expenses';
 
 //Объявление переменных - ссылок на HTML элементы
 const inputNode = document.getElementById('expenseInput');
@@ -10,16 +13,33 @@ const clearButtonNode = document.getElementById('clearButton');
 const totalValueNode = document.getElementById('totalValue');
 const statusNode = document.getElementById('statusText');
 const historyList = document.getElementById('historyList');
+const changeLimitBtn = document.getElementById('changeLimitBtn');
 
 //Получает лимит из элемента HTML с id limitValue
-
 const limitNode = document.getElementById('limitValue');
-const limit = parseInt(limitNode.innerText);
+let limit = parseInt(limitNode.innerText);
+
+function initLimit() {
+    const limitFromStorage = parseInt(localStorage.getItem(STORAGE_LABLE_LIMIT));
+    if (!limitFromStorage) {
+        return;
+    }
+    limitNode.innerText = limitFromStorage;
+    limit = parseInt(limitNode.innerText);
+}
+
+initLimit();
 
 //Объявление основной переменной
 //При запуске она содержит в себе пустой массив
 //который мы пополняем по нажатию на кнопку Добавить
+const expensesFromStorageString = localStorage.getItem(STORAGE_LABLE_EXPENSES);
+const expensesFromStorage = JSON.parse(expensesFromStorageString);
 let expenses = [];
+if (Array.isArray(expensesFromStorage)) {
+    expenses = expensesFromStorage;
+}
+render();
 
 //------------------ФУНКЦИИ----------------------
 
@@ -90,17 +110,24 @@ const clearInput = (input) => {
     input.value = '';
 };
 
+function saveExpensesToStorage() {
+    const expensesString = JSON.stringify(expenses);
+    localStorage.setItem(STORAGE_LABLE_EXPENSES, expensesString);
+}
+
 //Функция-обработчик которая будет вызвана при нажатии на кнопку Добавить
 function addButtonHandler() {
     //сохраняем в переменную currentAmount(текущая сумма) выбранную категорию
     const currentAmount = getExpenseFromUser();
     if (!currentAmount) {
+        alert('Задайте сумму!');
         return;
     }
 
     //сохраняем в переменную currentCategory(текущая категория) выбраную категорию
     const currentCategory = getSelectedCategory();
     if (currentCategory === 'Категория') {
+        alert('Выберите категорию!');
         return;
     }
 
@@ -111,6 +138,7 @@ function addButtonHandler() {
 
     //добавляем наш новыйРасход в массив расходов
     expenses.push(newExpense);
+    saveExpensesToStorage();
 
     //перерисовываем интерфейс
     render();
@@ -125,6 +153,23 @@ function clearButtonHandler() {
     render();
 }
 
+//функция-обработчик (хендлер) кнопки изменения лимита
+function changeLimitHandler() {
+    const newLimit = prompt(CHENGE_NEW_LIMIT_TEXT);
+    const newLimitValue = parseInt(newLimit);
+
+    if (!newLimitValue) {
+        return;
+    }
+
+    limitNode.innerText = newLimitValue;
+    limit = newLimitValue;
+    localStorage.setItem(STORAGE_LABLE_LIMIT, newLimitValue);
+
+    render();
+}
+
 //Привязка функций-обработчиков к кнопкам
 addButtonNode.addEventListener('click', addButtonHandler);
 clearButtonNode.addEventListener('click', clearButtonHandler);
+changeLimitBtn.addEventListener('click', changeLimitHandler);
